@@ -1,0 +1,14 @@
+<li>
+    <div class="date">
+        <span class="month">{{ .Date | time.Format ("Jan") }}</span>
+        <span class="day">{{ .Date | time.Format ("02") }}</span>
+        <span class="year">{{ .Date | time.Format ("2006") }}</span>
+    </div>
+    <div class="title">
+        <a href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
+        <div class="summary">
+            {{ .Summary | plainify | htmlUnescape }}
+        </div>
+    </div>
+  </li>
+  

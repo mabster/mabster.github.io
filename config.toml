@@ -1,0 +1,67 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-au'
+title = 'Mabster.NET'
+theme = 'hugo-coder'
+
+[params]
+author = "Matt Hamilton"
+description = "Matt Hamilton's home on the web."
+keywords = "blog,developer,personal"
+info = [".NET Developer, Comic Collector, Nutcase"]
+avatarURL = "https://avatars.githubusercontent.com/u/1276525?v=4"
+colorScheme = 'dark'
+dateFormat = '02 Jan 2006'
+customCSS = ['custom.css']
+
+touchicon = '/images/favicon-32x32.png'
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[taxonomies]
+category = "categories"
+series = "series"
+tag = "tags"
+author = "authors"
+
+[[menu.main]]
+name = "Posts"
+weight = 1
+url = "posts/"
+
+[[params.social]]
+name = 'GitHub'
+icon = 'fa fa-2x fa-github'
+weight = 3
+url = 'https://github.com/mabster'
+
+[[params.social]]
+name = 'Twitter'
+icon = 'fa fa-2x fa-twitter'
+weight = 3
+url = 'https://twitter.com/mabster'
+
+[[params.social]]
+name = 'Stack Overflow'
+icon = 'fa fa-2x fa-stack-overflow'
+weight = 3
+url = 'https://stackoverflow.com/users/615/matt-hamilton'
+
+
+[[params.social]]
+name = 'Facebook'
+icon = 'fa fa-2x fa-facebook'
+weight = 3
+url = 'https://facebook.com/mabster'
+
+[[params.social]]
+name = 'LinkedIn'
+icon = 'fa fa-2x fa-linkedin'
+weight = 3
+url = 'https://www.linkedin.com/in/matt-hamilton-au'
+
+[[params.social]]
+name = 'Blog Feed'
+icon = 'fa fa-2x fa-rss'
+weight = 3
+url = '/index.xml'
