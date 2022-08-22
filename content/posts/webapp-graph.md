@@ -1,6 +1,6 @@
 +++ 
 draft = false
-date = 2022-08-24T14:40:00+10:00
+date = 2022-08-24T09:00:00+10:00
 title = "Calling MS Graph from ASP.NET on Azure"
 description = ""
 slug = ""

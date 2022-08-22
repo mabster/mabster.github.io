@@ -1,6 +1,6 @@
 +++ 
 draft = false
-date = 2022-08-22T14:35:00+10:00
+date = 2022-08-22T09:00:00+10:00
 title = "Calling MS Graph from PSU on Azure"
 description = "Hosting PSU on Azure? Here's how to connect to Graph."
 slug = ""
