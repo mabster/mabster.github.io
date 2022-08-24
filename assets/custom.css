@@ -88,3 +88,7 @@ li .date .month {
 .title .summary p {
     margin-top: 0;
 }
+
+.content article p {
+    hyphens: unset !important;
+}
