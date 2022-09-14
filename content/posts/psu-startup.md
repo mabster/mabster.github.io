@@ -1,7 +1,7 @@
 +++ 
 draft = false
 date = 2022-08-20T14:30:00+10:00
-title = "PowerShell Universal On-Startup Script"
+title = "PowerShell Universal Startup Script"
 description = "Here's a script I made for PowerShell Universal to run on server startup."
 slug = ""
 authors = []
@@ -88,8 +88,4 @@ Register-SecretVault -ModuleName Az.KeyVault -Name AzureKeyVault -VaultParameter
     AZKVaultName = $vault
     SubscriptionId = $sub
 } -AllowClobber -DefaultVault
-
-# PSU's UI doesn't immediately know about the vault, so give it a nudge.
-
-Sync-PSUConfiguration -Integrated
 ```
