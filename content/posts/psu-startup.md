@@ -11,7 +11,9 @@ externalLink = ""
 series = []
 +++
 
-I've been playing with [PowerShell Universal](https://ironmansoftware.com/powershell-universal) for almost a year now, and I thought this would be a great place to share some tips, tricks and scripts that have helped me out. And what better place to start than the `On-Startup.ps1` script? That's the script that I have configured to run when our PSU server starts.
+I've been playing with [PowerShell Universal](https://ironmansoftware.com/powershell-universal) for almost a year now, and I thought this would be a great place to share some tips, tricks and scripts that have helped me out. And what better place to start than the `initialize.ps1` script? That's the script that runs right before the PSU server starts.
+
+The script lives in the `.universal` folder inside your Repository folder, so create it if it doesn't exist already.
 
 <!--more--> 
 
@@ -22,6 +24,9 @@ Since we host PSU in an Azure App Service, this script also connects to Azure as
 Obviously I'm not including any personal information in this copy of the script, so make sure you swap in your subscription ID, KeyVault name etc!
 
 ```powershell
+# Good chance the $Repository variable doesn't exist yet, so set it to the Repository folder just in case.
+$repo = $Repository ?? 'D:\home\data\PowershellUniversal\Repository'
+
 # Ensure that all required modules are installed outside of the repository
 $modules = @(
   'Az.Accounts'
@@ -32,7 +37,7 @@ $modules = @(
 )
 
 # make a 'Modules' folder alongside the repository
-$path = Join-Path $Repository '..\Modules\'
+$path = Join-Path $repo '..\Modules\'
 if (-not (Test-Path $path)) {
   New-Item -Path $path -ItemType Directory -Force
 }
@@ -40,7 +45,7 @@ $path = Resolve-Path $path
 
 # Add it to the path
 if ($env:PSModulePath -split ';' -notcontains $path) {
-  $env:PSModulePath += ";$path"
+    $env:PSModulePath += ";$path"
 }
 
 # Save the modules to our new folder

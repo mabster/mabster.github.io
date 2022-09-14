@@ -6,6 +6,7 @@ theme = 'hugo-coder'
 [params]
 author = "Matt Hamilton"
 description = "Matt Hamilton's home on the web."
+images = ["https://avatars.githubusercontent.com/u/1276525?v=4"]
 keywords = "blog,developer,personal"
 info = [".NET Developer, Comic Collector, Nutcase"]
 avatarURL = "https://avatars.githubusercontent.com/u/1276525?v=4"
