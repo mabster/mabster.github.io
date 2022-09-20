@@ -48,7 +48,9 @@ Next up, after your build/publish step, you'll want to generate the migration. T
     run: dotnet ef migrations bundle --startup-project MyApp --output ${{env.DOTNET_ROOT}}/myapp/efbundle.exe --configuration Bundle
 ```
 
+{{< notice note >}}
 You'll notice the `--configuration Bundle` on the end there. That's a hack to work around [this issue](https://github.com/dotnet/efcore/issues/25555), which I really hope is fixed in the EF 7 release. What you *should* be able to do, since you just finished building the solution, is pass `--configuration Release` and `--no-build` so it uses the already-built binaries to create the bundle.
+{{< /notice >}}
 
 If you're more SQL-script oriented, you might instead like to generate an idempotent script, which you can do like this:
 

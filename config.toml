@@ -13,8 +13,9 @@ avatarURL = "https://avatars.githubusercontent.com/u/1276525?v=4"
 colorScheme = 'dark'
 dateFormat = '02 Jan 2006'
 customCSS = ['custom.css']
-
 touchicon = '/images/favicon-32x32.png'
+gitRepo = "https://github.com/mabster/mabster.github.io"
+gitBranch = "main"
 
 [markup.goldmark.renderer]
 unsafe = true

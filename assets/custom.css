@@ -19,10 +19,6 @@ body.colorscheme-dark a, body.colorscheme-dark .footer a {
     color: rosybrown !important;
 }
 
-footer {
-    opacity: 0.4;
-}
-
 a.heading-link {
     display: none;
 }
@@ -44,7 +40,7 @@ a.heading-link {
     margin-bottom: 3rem;
 }
 
-.date {
+li .date {
     opacity: 0.4;
 } 
 
@@ -75,7 +71,6 @@ li .date .month {
         font-size: 1.2rem; 
         letter-spacing: 0.3rem;
     }
-       
 }
 
 .title .summary  {
@@ -91,4 +86,13 @@ li .date .month {
 
 .content article p {
     hyphens: unset !important;
+}
+
+.content .post .post-meta {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.content .post .post-meta .date .reading-time {
+    margin-right: 1.5rem;
 }

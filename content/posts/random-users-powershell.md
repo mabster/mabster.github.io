@@ -17,7 +17,9 @@ We had a situation at work recently where we needed to gradually roll out a chan
 
 I came up with this nifty (if I do say so myself) PowerShell script to pull a percentage of users from each department. Thought I'd share it here!
 
+{{< notice note >}}
 This script obviously requires the `ActiveDirectory` PowerShell module. I think it would be pretty trivial to port this over to the `Microsoft.Graph` module if you wanted it to query Azure AD instead.
+{{< /notice >}}
 
 ```powershell
 $minimum = 1 # we want a minimum of one user from each group
