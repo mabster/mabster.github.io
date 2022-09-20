@@ -6,7 +6,7 @@ theme = 'hugo-coder'
 [params]
 author = "Matt Hamilton"
 description = "Matt Hamilton's home on the web."
-images = ["https://avatars.githubusercontent.com/u/1276525?v=4"]
+images = ["https://mabster.net/images/thumbnail.png"]
 keywords = "blog,developer,personal"
 info = [".NET Developer, Comic Collector, Nutcase"]
 avatarURL = "https://avatars.githubusercontent.com/u/1276525?v=4"
@@ -48,7 +48,6 @@ name = 'Stack Overflow'
 icon = 'fa fa-2x fa-stack-overflow'
 weight = 3
 url = 'https://stackoverflow.com/users/615/matt-hamilton'
-
 
 [[params.social]]
 name = 'Facebook'
