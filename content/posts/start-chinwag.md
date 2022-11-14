@@ -23,7 +23,7 @@ The link above will take you to the script, but in this article I will break dow
 
 First we define a helper function that lets us detect if the required modules are installed, and install them if necessary:
 
-```
+```powershell
 function Test-Module($moduleName) {
     if (-not (Get-Module $moduleName -ListAvailable)) {
         Install-Module $moduleName -Scope CurrentUser -Force
@@ -37,7 +37,7 @@ Test-Module Microsoft.Graph.CloudCommunications
 
 Next, we have some logic to detect if you're already connected to Graph before the script runs. It was tiresome having to sign in every time the script ran.
 
-```
+```powershell
 $ctx = Get-MgContext
 if ($null -eq $ctx) {
     Connect-MgGraph -Scope Directory.Read.All,Presence.Read.All | Out-Null
@@ -46,7 +46,7 @@ if ($null -eq $ctx) {
 
 Having connected to Graph, we find the group whose name matches the parameter you passed to the script, and grab its members:
 
-```
+```powershell
 $group = Get-MgGroup -Filter "displayName eq '$GroupName'"
 if ($null -eq $group) {
     Write-Warning "Group '$GroupName' was not found."
@@ -68,7 +68,7 @@ Bonus tip that I learned while making this: Get-Random will pick a random elemen
 {{< /notice >}}
 
 
-```
+```powershell
 $available = Get-MgCommunicationPresenceByUserId -Ids $members.id | Where-Object Availability -eq 'Available'
 if ($null -eq $available) {
     Write-Warning "No members of group '$GroupName' are available."
@@ -85,7 +85,7 @@ if ($null -eq $callee) {
 
 We then check whether you passed a `-WhatIf` parameter, and if not, we call the person we selected:
 
-```
+```powershell
 if ($PSCmdlet.ShouldProcess("$($callee.DisplayName) ($($callee.UserPrincipalName))", "Calling")) {
     start "callto:$($callee.userPrincipalName)"
 }
@@ -93,7 +93,7 @@ if ($PSCmdlet.ShouldProcess("$($callee.DisplayName) ($($callee.UserPrincipalName
 
 And lastly, we disconnect from Graph if you weren't already connected when the script ran:
 
-```
+```powershell
 if ($null -eq $ctx) {
     Disconnect-MgGraph | Out-Null
 }
