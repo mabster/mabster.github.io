@@ -4,49 +4,49 @@
 <time datetime=2022-11-14T14:53:34+11:00>14 Nov 2022</time></span>
 <span class=reading-time><i class="fa fa-clock-o" aria-hidden=true></i>
 3-minute read</span>
-<span><a href=https://github.com/mabster/mabster.github.io/tree/main/content/posts/start-chinwag.md><i class="fa fa-github"></i> View on GitHub</a></span></div></div></header><div><p>Recently, my manager was experimenting with the idea of randomly touching base with people in the business through the day as a way to keep engaged when working remotely. Not content with a manual process, he was tinkering with a PowerShell script to get the members of an Active Directory group, choose someone at random, and start a Teams call using the <code>callto:</code> protocol.</p><p>As these things tend to do, the whole thing escalated into the funky script that I&rsquo;m sharing with you today. Together we migrated the original script from on-prem AD to Azure AD, and finally to Graph.</p><p>We call the script <a href=https://gist.github.com/mabster/262060576dd0bb1afda65ecca57173eb>Start-ChinWag.ps1</a>, since a &ldquo;chin-wag&rdquo; in Australian slang is a casual conversation.</p><p>The link above will take you to the script, but in this article I will break down how it works.</p><p>First we define a helper function that lets us detect if the required modules are installed, and install them if necessary:</p><pre tabindex=0><code>function Test-Module($moduleName) {
-    if (-not (Get-Module $moduleName -ListAvailable)) {
-        Install-Module $moduleName -Scope CurrentUser -Force
-    }
-}
-
-Test-Module Microsoft.Graph.Users
-Test-Module Microsoft.Graph.Groups
-Test-Module Microsoft.Graph.CloudCommunications
-</code></pre><p>Next, we have some logic to detect if you&rsquo;re already connected to Graph before the script runs. It was tiresome having to sign in every time the script ran.</p><pre tabindex=0><code>$ctx = Get-MgContext
-if ($null -eq $ctx) {
-    Connect-MgGraph -Scope Directory.Read.All,Presence.Read.All | Out-Null
-}
-</code></pre><p>Having connected to Graph, we find the group whose name matches the parameter you passed to the script, and grab its members:</p><pre tabindex=0><code>$group = Get-MgGroup -Filter &#34;displayName eq &#39;$GroupName&#39;&#34;
-if ($null -eq $group) {
-    Write-Warning &#34;Group &#39;$GroupName&#39; was not found.&#34;
-    return
-}
-
-$members = Get-MgGroupMember -groupid $group.id -Filter &#34;userPrincipalName ne &#39;$((Get-MgContext).Account)&#39;&#34; -CountVariable c -ConsistencyLevel eventual
-if ($null -eq $members) {
-    Write-Warning &#34;Group &#39;$GroupName&#39; has no members.&#34;
-    return
-}
-</code></pre><p>Now we use the cloud communications module to get the availability of all the members in one hit, and extract just the people who are available for a call right now. From those people, we select one at random.</p><div class="notice note"><div class=notice-title><i class="fa fa-sticky-note" aria-hidden=true></i>Note</div><div class=notice-content>Bonus tip that I learned while making this: Get-Random will pick a random element from the pipeline! That&rsquo;s very cool!</div></div><pre tabindex=0><code>$available = Get-MgCommunicationPresenceByUserId -Ids $members.id | Where-Object Availability -eq &#39;Available&#39;
-if ($null -eq $available) {
-    Write-Warning &#34;No members of group &#39;$GroupName&#39; are available.&#34;
-    return
-}
-
-$id = ($available | Get-Random).id
-$callee = Get-MgUser -UserId $id
-if ($null -eq $callee) {
-    Write-Warning &#34;Could not get details for user &#39;$id&#39;.&#34;
-    return
-}
-</code></pre><p>We then check whether you passed a <code>-WhatIf</code> parameter, and if not, we call the person we selected:</p><pre tabindex=0><code>if ($PSCmdlet.ShouldProcess(&#34;$($callee.DisplayName) ($($callee.UserPrincipalName))&#34;, &#34;Calling&#34;)) {
-    start &#34;callto:$($callee.userPrincipalName)&#34;
-}
-</code></pre><p>And lastly, we disconnect from Graph if you weren&rsquo;t already connected when the script ran:</p><pre tabindex=0><code>if ($null -eq $ctx) {
-    Disconnect-MgGraph | Out-Null
-}
-</code></pre><p>And there you have it! Call a random member of a group (or Team) automatically from the command line!</p></div><footer></footer></article></section></div><footer class=footer><section class=container>©
+<span><a href=https://github.com/mabster/mabster.github.io/tree/main/content/posts/start-chinwag.md><i class="fa fa-github"></i> View on GitHub</a></span></div></div></header><div><p>Recently, my manager was experimenting with the idea of randomly touching base with people in the business through the day as a way to keep engaged when working remotely. Not content with a manual process, he was tinkering with a PowerShell script to get the members of an Active Directory group, choose someone at random, and start a Teams call using the <code>callto:</code> protocol.</p><p>As these things tend to do, the whole thing escalated into the funky script that I&rsquo;m sharing with you today. Together we migrated the original script from on-prem AD to Azure AD, and finally to Graph.</p><p>We call the script <a href=https://gist.github.com/mabster/262060576dd0bb1afda65ecca57173eb>Start-ChinWag.ps1</a>, since a &ldquo;chin-wag&rdquo; in Australian slang is a casual conversation.</p><p>The link above will take you to the script, but in this article I will break down how it works.</p><p>First we define a helper function that lets us detect if the required modules are installed, and install them if necessary:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=display:flex><span><span style=color:#66d9ef>function</span> Test-Module($moduleName) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (<span style=color:#f92672>-not</span> (Get-Module $moduleName -ListAvailable)) {
+</span></span><span style=display:flex><span>        Install-Module $moduleName -Scope CurrentUser -Force
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Test-Module Microsoft.Graph.Users
+</span></span><span style=display:flex><span>Test-Module Microsoft.Graph.Groups
+</span></span><span style=display:flex><span>Test-Module Microsoft.Graph.CloudCommunications
+</span></span></code></pre></div><p>Next, we have some logic to detect if you&rsquo;re already connected to Graph before the script runs. It was tiresome having to sign in every time the script ran.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=display:flex><span>$ctx = Get-MgContext
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $ctx) {
+</span></span><span style=display:flex><span>    Connect-MgGraph -Scope Directory.Read.All,Presence.Read.All | Out-Null
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Having connected to Graph, we find the group whose name matches the parameter you passed to the script, and grab its members:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=display:flex><span>$group = Get-MgGroup -Filter <span style=color:#e6db74>&#34;displayName eq &#39;$GroupName&#39;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $group) {
+</span></span><span style=display:flex><span>    Write-Warning <span style=color:#e6db74>&#34;Group &#39;$GroupName&#39; was not found.&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$members = Get-MgGroupMember -groupid $group.id -Filter <span style=color:#e6db74>&#34;userPrincipalName ne &#39;</span>$((Get-MgContext).Account)<span style=color:#e6db74>&#39;&#34;</span> -CountVariable c -ConsistencyLevel eventual
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $members) {
+</span></span><span style=display:flex><span>    Write-Warning <span style=color:#e6db74>&#34;Group &#39;$GroupName&#39; has no members.&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Now we use the cloud communications module to get the availability of all the members in one hit, and extract just the people who are available for a call right now. From those people, we select one at random.</p><div class="notice note"><div class=notice-title><i class="fa fa-sticky-note" aria-hidden=true></i>Note</div><div class=notice-content>Bonus tip that I learned while making this: Get-Random will pick a random element from the pipeline! That&rsquo;s very cool!</div></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=display:flex><span>$available = Get-MgCommunicationPresenceByUserId -Ids $members.id | Where-Object Availability <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#39;Available&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $available) {
+</span></span><span style=display:flex><span>    Write-Warning <span style=color:#e6db74>&#34;No members of group &#39;$GroupName&#39; are available.&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$id = ($available | Get-Random).id
+</span></span><span style=display:flex><span>$callee = Get-MgUser -UserId $id
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $callee) {
+</span></span><span style=display:flex><span>    Write-Warning <span style=color:#e6db74>&#34;Could not get details for user &#39;$id&#39;.&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>We then check whether you passed a <code>-WhatIf</code> parameter, and if not, we call the person we selected:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=display:flex><span><span style=color:#66d9ef>if</span> ($PSCmdlet.ShouldProcess(<span style=color:#e6db74>&#34;</span>$($callee.DisplayName)<span style=color:#e6db74> (</span>$($callee.UserPrincipalName)<span style=color:#e6db74>)&#34;</span>, <span style=color:#e6db74>&#34;Calling&#34;</span>)) {
+</span></span><span style=display:flex><span>    start <span style=color:#e6db74>&#34;callto:</span>$($callee.userPrincipalName)<span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>And lastly, we disconnect from Graph if you weren&rsquo;t already connected when the script ran:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=display:flex><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $ctx) {
+</span></span><span style=display:flex><span>    Disconnect-MgGraph | Out-Null
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>And there you have it! Call a random member of a group (or Team) automatically from the command line!</p></div><footer></footer></article></section></div><footer class=footer><section class=container>©
 2022
 Matt Hamilton
 ·
