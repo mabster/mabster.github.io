@@ -44,6 +44,7 @@ weight = 3
 url = 'https://twitter.com/mabster'
 
 [[params.social]]
+rel = 'me'
 name = 'Mastodon'
 icon = 'fa fa-2x fa-mastodon'
 weight = 3
