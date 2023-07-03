@@ -10,7 +10,7 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> MapOneTimeFiles(<span style=color:#66d9ef>this</span> IEndpointRouteBuilder endpoints, <span style=color:#66d9ef>string</span> pattern = <span style=color:#e6db74>&#34;/downloads/{id}&#34;</span>)
 </span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        endpoints.MapGet(pattern, Get).WithName(_routeName);
+</span></span><span style=display:flex><span>        endpoints.MapGet(pattern, Get).WithName(_routeName).AllowAnonymous();
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>static</span> ActionResult OneTimeFile(<span style=color:#66d9ef>this</span> ControllerBase controller, IResult file)
