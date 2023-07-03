@@ -34,7 +34,7 @@ public static class OneTimeFiles
 
     public static void MapOneTimeFiles(this IEndpointRouteBuilder endpoints, string pattern = "/downloads/{id}")
     {
-        endpoints.MapGet(pattern, Get).WithName(_routeName);
+        endpoints.MapGet(pattern, Get).WithName(_routeName).AllowAnonymous();
     }
 
     static ActionResult OneTimeFile(this ControllerBase controller, IResult file)
