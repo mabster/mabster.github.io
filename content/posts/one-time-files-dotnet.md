@@ -30,9 +30,11 @@ The implementation is all done in this static class, which uses .NET 7's minimal
 ```csharp
 public static class OneTimeFiles
 {
+    const string _routeName = "cachedFiles";
+
     public static void MapOneTimeFiles(this IEndpointRouteBuilder endpoints, string pattern = "/downloads/{id}")
     {
-        endpoints.MapGet(pattern, Get).WithName("cachedFiles");
+        endpoints.MapGet(pattern, Get).WithName(_routeName);
     }
 
     static ActionResult OneTimeFile(this ControllerBase controller, IResult file)
@@ -42,7 +44,7 @@ public static class OneTimeFiles
         var id = Guid.NewGuid().ToString();
         cache.Set(id, file, TimeSpan.FromMinutes(1));
 
-        return controller.Created(controller.Url.RouteUrl("cachedFiles", new { id })!, null);
+        return controller.Created(controller.Url.RouteUrl(_routeName, new { id })!, null);
     }
 
     public static ActionResult OneTimeFile(this ControllerBase controller, string path, string? contentType = null, string? fileDownloadName = null)
