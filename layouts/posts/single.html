@@ -29,12 +29,10 @@
               <a href='{{ .Site.Params.gitRepo }}/tree/{{ .Site.Params.gitBranch | default "main" }}/content/{{ path.Clean .File.Path }}'><i class="fa fa-github"></i> View on GitHub</a>
             </span>
             {{ end }}
-      
-      
           </div>
           {{ with .Page.Params.Authors }}{{ partial "taxonomy/authors.html" . }}{{ end }}
           {{ with .Page.Params.Categories }}{{ partial "taxonomy/categories.html" . }}{{ end }}
-          {{ with .Page.Params.Tags }}{{ partial "taxonomy/tags.html" . }}{{ end }}
+          {{ with .GetTerms "tags" }}{{ partial "taxonomy/tags.html" . }}{{ end }}
         </div>
       </header>
 
