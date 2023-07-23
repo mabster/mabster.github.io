@@ -5,7 +5,7 @@ title = "One-Time File Downloads in ASP.NET"
 description = ""
 slug = ""
 authors = []
-tags = []
+tags = ['dotnet', 'Blazor']
 categories = []
 externalLink = ""
 series = []
@@ -17,7 +17,7 @@ A trick for downloading files from your secure ASP.NET Web API.
 
 We have an app with an ASP.NET Web API back end and a Blazor WASM front end. It uses Azure AD authentication, so all the requests from the client to the server are secured with a JSON web token in the `Authorization` HTTP header.
 
-The security is great and works well, but it makes it a pain to ask the server for a file and present them to the user as a standard browser download.
+The security is great and works well, but it makes it a pain to ask the server for a file and present it to the user as a standard browser download.
 
 The [guidance from Microsoft](https://learn.microsoft.com/en-us/aspnet/core/blazor/file-downloads?view=aspnetcore-7.0) suggests that you pull down enough information to construct the file client-side, and then use a javascript shim to trick the browser into thinking it's a file. This works, but it always felt clunky to me. I want the server to create the file - I don't want to have the file creation logic in my Blazor app.
 
