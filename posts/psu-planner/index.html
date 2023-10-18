@@ -1,0 +1,114 @@
+<!doctype html><html lang=en><head><title>Get Planner Data with PowerShell Universal · Mabster.NET</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><meta name=author content="Matt Hamilton"><meta name=description content="Recently, the Graph team introduced the ability to access Planner as an application, rather than as a human. That means we were able to give PowerShell Universal the ability to read plans, tasks etc and surface them as an API endpoint."><meta name=keywords content="blog,developer,personal"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://mabster.net/images/thumbnail.png"><meta name=twitter:title content="Get Planner Data with PowerShell Universal"><meta name=twitter:description content="Recently, the Graph team introduced the ability to access Planner as an application, rather than as a human. That means we were able to give PowerShell Universal the ability to read plans, tasks etc and surface them as an API endpoint."><meta property="og:title" content="Get Planner Data with PowerShell Universal"><meta property="og:description" content="Recently, the Graph team introduced the ability to access Planner as an application, rather than as a human. That means we were able to give PowerShell Universal the ability to read plans, tasks etc and surface them as an API endpoint."><meta property="og:type" content="article"><meta property="og:url" content="http://mabster.github.io/posts/psu-planner/"><meta property="og:image" content="https://mabster.net/images/thumbnail.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-10-18T12:00:00+11:00"><meta property="article:modified_time" content="2023-10-18T12:00:00+11:00"><link rel=canonical href=http://mabster.github.io/posts/psu-planner/><link rel=preload href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as=font type=font/woff2 crossorigin><link rel=stylesheet href=/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin=anonymous media=screen><link rel=stylesheet href=/custom.min.15aa208f77a4d55355f9529005cc32e48608e9e4a44bf9f18a0cd7ca8b085c2d.css integrity="sha256-Faogj3ek1VNV+VKQBcwy5IYI6eSkS/nxigzXyosIXC0=" crossorigin=anonymous media=screen><link rel=icon type=image/svg+xml href=/images/favicon.svg sizes=any><link rel=icon type=image/png href=/images/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/images/favicon-16x16.png sizes=16x16><link rel=apple-touch-icon href=/images/favicon-32x32.png><link rel=apple-touch-icon sizes=180x180 href=/images/favicon-32x32.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/images/safari-pinned-tab.svg color=#5bbad5></head><body class="preload-transitions colorscheme-dark"><div class=float-container><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa fa-adjust fa-fw" aria-hidden=true></i></a></div><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=/>Mabster.NET</a>
+<input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><i class="fa fa-bars fa-fw" aria-hidden=true></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=/posts/>Posts</a></li></ul></section></nav><div class=content><section class="container post"><article><header><div class=post-title><h1 class=title><a class=title-link href=http://mabster.github.io/posts/psu-planner/>Get Planner Data with PowerShell Universal</a></h1></div><div class=post-meta><div class=date><span class=posted-on><i class="fa fa-calendar" aria-hidden=true></i>
+<time datetime=2023-10-18T12:00:00+11:00>18 Oct 2023</time></span>
+<span class=reading-time><i class="fa fa-clock-o" aria-hidden=true></i>
+3-minute read</span>
+<span><a href=https://github.com/mabster/mabster.github.io/tree/main/content/posts/psu-planner.md><i class="fa fa-github"></i> View on GitHub</a></span></div><div class=tags><i class="fa fa-tag" aria-hidden=true></i>
+<span class=tag><a href=/tags/planner/>Planner</a></span>
+<span class=separator>•</span>
+<span class=tag><a href=/tags/powershell/>PowerShell</a></span>
+<span class=separator>•</span>
+<span class=tag><a href=/tags/universal/>Universal</a></span>
+<span class=separator>•</span>
+<span class=tag><a href=/tags/graph/>Graph</a></span></div></div></header><div class=post-content><p>Recently, the Graph team introduced the ability to access Planner as an application, rather than as a human. That means we were able to give PowerShell Universal the ability to read plans, tasks etc and surface them as an API endpoint.</p><p>The trick is to give the Azure Managed Identity for PowerShell Universal the <code>Tasks.Read.All</code> permission. Once it has that, it can read any plan in your tenant.</p><p>Here&rsquo;s our <code>Get-GroupPlanner.ps1</code> script in its entirety! It lets us get all of the Planner boards (and the buckets & tasks therein) for a given Microsoft 365 group.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=display:flex><span><span style=color:#66d9ef>param</span> (
+</span></span><span style=display:flex><span>    [Parameter()][<span style=color:#66d9ef>string</span>] $GroupId 
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Connect-MgGraph -Identity | Out-Null
+</span></span><span style=display:flex><span><span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e># First, get all the users in the group. We need their display name and dept.</span>
+</span></span><span style=display:flex><span>    $users = Get-MgGroupMember -GroupId $GroupId -All -Property id,displayName,department
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Now get all of the Planner boards in the group.</span>
+</span></span><span style=display:flex><span>    $plans = Get-MgGroupPlannerPlan -GroupId $GroupId | Foreach-Object {
+</span></span><span style=display:flex><span>        [<span style=color:#66d9ef>PSCustomObject</span>] @{
+</span></span><span style=display:flex><span>            Id = $_.Id
+</span></span><span style=display:flex><span>            Title = $_.Title
+</span></span><span style=display:flex><span>            Buckets = $null
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    $plans | Foreach-Object {
+</span></span><span style=display:flex><span>        <span style=color:#75715e># Grab all of this plan&#39;s tasks in one call.</span>
+</span></span><span style=display:flex><span>        $tasks = Get-MgPlannerPlanTask -PlannerPlanId $_.id
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># set display name on all the assigned users.</span>
+</span></span><span style=display:flex><span>        $tasks.Assignments.AdditionalProperties | Foreach-Object {
+</span></span><span style=display:flex><span>            $a = $_
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> ($a) {
+</span></span><span style=display:flex><span>                $a.Keys | Foreach-Object {
+</span></span><span style=display:flex><span>                    $u = ($users | Where-Object id <span style=color:#f92672>-eq</span> $_).additionalProperties
+</span></span><span style=display:flex><span>                    $a[$_].displayName = $u.displayName
+</span></span><span style=display:flex><span>                    $a[$_].department = $u.department
+</span></span><span style=display:flex><span>                }
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e># Grab the descriptions of the plan&#39;s categories (labels).</span>
+</span></span><span style=display:flex><span>        $categories = (Get-MgPlannerPlanDetail -PlannerPlanId $_.id).CategoryDescriptions
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># Get all the plan&#39;s buckets.</span>
+</span></span><span style=display:flex><span>        $_.Buckets = @(Get-MgPlannerPlanBucket -PlannerPlanId $_.id | Foreach-Object {
+</span></span><span style=display:flex><span>            [<span style=color:#66d9ef>PSCustomObject</span>] @{
+</span></span><span style=display:flex><span>                Id = $_.Id
+</span></span><span style=display:flex><span>                Name = $_.Name
+</span></span><span style=display:flex><span>                Tasks = @($tasks | Where-Object BucketId <span style=color:#f92672>-eq</span> $_.Id | Foreach-Object {
+</span></span><span style=display:flex><span>                    [<span style=color:#66d9ef>PSCustomObject</span>] @{
+</span></span><span style=display:flex><span>                        Id = $_.Id
+</span></span><span style=display:flex><span>                        Title = $_.Title
+</span></span><span style=display:flex><span>                        StartDateTime = $_.StartDateTime
+</span></span><span style=display:flex><span>                        DueDateTime = $_.DueDateTime
+</span></span><span style=display:flex><span>                        CompletedDateTime = $_.CompletedDateTime
+</span></span><span style=display:flex><span>                        Categories = @($_.AppliedCategories.AdditionalProperties.Keys | Foreach-Object {
+</span></span><span style=display:flex><span>                            $categories.$_
+</span></span><span style=display:flex><span>                        }) 
+</span></span><span style=display:flex><span>                        Assignees = @($_.Assignments.AdditionalProperties.Values | Foreach-Object {
+</span></span><span style=display:flex><span>                            [<span style=color:#66d9ef>PSCustomObject</span>] @{
+</span></span><span style=display:flex><span>                                DisplayName = $_.displayName
+</span></span><span style=display:flex><span>                                Department = $_.department
+</span></span><span style=display:flex><span>                            }
+</span></span><span style=display:flex><span>                        })
+</span></span><span style=display:flex><span>                    }
+</span></span><span style=display:flex><span>                })
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        })
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    $plans
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#66d9ef>finally</span> {
+</span></span><span style=display:flex><span>    Disconnect-MgGraph | Out-Null
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class="notice note"><div class=notice-title><i class="fa fa-sticky-note" aria-hidden=true></i>Note</div><div class=notice-content>Notice how the value we assign to <code>categories</code> and <code>assignees</code> is wrapped in <code>@()</code>? That&rsquo;s because PowerShell has this &ldquo;helpful&rdquo; behaviour where a list of one item is treated the same as the item itself. So if there is only one category applied to a task, the <code>categories</code> property ends up being a string rather than an array of strings. Wrapping the value in <code>@()</code> forces PowerShell to treat it as an array.</div></div><p>When we call this script from an API endpoint, we get a nice JSON object representing all of the plans in the given Microsoft 365 group. It looks kinda like this:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>[
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&#34;id&#34;</span> : <span style=color:#e6db74>&#34;&lt;plan id&gt;&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&#34;title&#34;</span> : <span style=color:#e6db74>&#34;My Planner Board&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#f92672>&#34;buckets&#34;</span> : [
+</span></span><span style=display:flex><span>            {
+</span></span><span style=display:flex><span>                <span style=color:#f92672>&#34;id&#34;</span> : <span style=color:#e6db74>&#34;&lt;bucket id&gt;&#34;</span>,
+</span></span><span style=display:flex><span>                <span style=color:#f92672>&#34;name&#34;</span> : <span style=color:#e6db74>&#34;My Bucket&#34;</span>,
+</span></span><span style=display:flex><span>                <span style=color:#f92672>&#34;tasks&#34;</span> : [
+</span></span><span style=display:flex><span>                    {
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>&#34;id&#34;</span> : <span style=color:#e6db74>&#34;&lt;task id&gt;&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>&#34;title&#34;</span> : <span style=color:#e6db74>&#34;My Task&#34;</span>,
+</span></span><span style=display:flex><span>                        <span style=color:#75715e>// other properties
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                        <span style=color:#f92672>&#34;categories&#34;</span> : [ <span style=color:#e6db74>&#34;stuff&#34;</span>, <span style=color:#e6db74>&#34;things&#34;</span>, <span style=color:#e6db74>&#34;other&#34;</span> ],
+</span></span><span style=display:flex><span>                        <span style=color:#f92672>&#34;assignees&#34;</span> : [ 
+</span></span><span style=display:flex><span>                            { 
+</span></span><span style=display:flex><span>                                <span style=color:#f92672>&#34;displayName&#34;</span> : <span style=color:#e6db74>&#34;Matt Hamilton&#34;</span>, 
+</span></span><span style=display:flex><span>                                <span style=color:#f92672>&#34;department&#34;</span> : <span style=color:#e6db74>&#34;IT&#34;</span> 
+</span></span><span style=display:flex><span>                            }, <span style=color:#75715e>// and all the other assignees
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                        ]
+</span></span><span style=display:flex><span>                    }, <span style=color:#75715e>// and all the other tasks
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                ]
+</span></span><span style=display:flex><span>            }, <span style=color:#75715e>// and all the other buckets
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        ]
+</span></span><span style=display:flex><span>    }, <span style=color:#75715e>// and all the other plans
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>]
+</span></span></code></pre></div><p>Yes, the JSON is restructured somewhat from the data returned from the Graph endpoints. That&rsquo;s intentional - the Graph endpoints return a lot of metadata that we simply didn&rsquo;t need. But you can certainly use this as a starting point for a script that suits your needs! Go nuts!</p></div><footer></footer></article></section></div><footer class=footer><section class=container>©
+2023
+Matt Hamilton
+·
+Powered by <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> & <a href=https://github.com/luizdepra/hugo-coder/ target=_blank rel=noopener>Coder</a>.</section></footer></main><script src=/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script></body></html>
