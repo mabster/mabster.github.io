@@ -4,7 +4,7 @@ title = 'Mabster.NET'
 theme = 'hugo-coder'
 
 [params]
-author = "Matt Hamilton"
+author.name = "Matt Hamilton"
 description = "Matt Hamilton's home on the web."
 images = ["https://mabster.net/images/thumbnail.png"]
 keywords = "blog,developer,personal"
@@ -16,6 +16,7 @@ customCSS = ['custom.css']
 touchicon = '/images/favicon-32x32.png'
 gitRepo = "https://github.com/mabster/mabster.github.io"
 gitBranch = "main"
+social.twitter = 'mabster'
 
 [markup.goldmark.renderer]
 unsafe = true
@@ -31,44 +32,44 @@ name = "Posts"
 weight = 1
 url = "posts/"
 
-[[params.social]]
+[[params.socials]]
 name = 'GitHub'
 icon = 'fa fa-2x fa-github'
 weight = 3
 url = 'https://github.com/mabster'
 
-[[params.social]]
-name = 'Twitter'
-icon = 'fa fa-2x fa-twitter'
-weight = 3
-url = 'https://twitter.com/mabster'
-
-[[params.social]]
+[[params.socials]]
 rel = 'me'
 name = 'Mastodon'
 icon = 'fa fa-2x fa-mastodon'
 weight = 3
 url = 'https://mastodon.social/@mabster'
 
-[[params.social]]
+[[params.socials]]
+name = 'Twitter'
+icon = 'fa fa-2x fa-twitter'
+weight = 3
+url = 'https://twitter.com/mabster'
+
+[[params.socials]]
 name = 'Stack Overflow'
 icon = 'fa fa-2x fa-stack-overflow'
 weight = 3
 url = 'https://stackoverflow.com/users/615/matt-hamilton'
 
-[[params.social]]
+[[params.socials]]
 name = 'Facebook'
 icon = 'fa fa-2x fa-facebook'
 weight = 3
 url = 'https://facebook.com/mabster'
 
-[[params.social]]
+[[params.socials]]
 name = 'LinkedIn'
 icon = 'fa fa-2x fa-linkedin'
 weight = 3
 url = 'https://www.linkedin.com/in/matt-hamilton-au'
 
-[[params.social]]
+[[params.socials]]
 name = 'Blog Feed'
 icon = 'fa fa-2x fa-rss'
 weight = 3
