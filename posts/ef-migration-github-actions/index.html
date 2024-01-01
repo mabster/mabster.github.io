@@ -32,7 +32,7 @@
 </span></span><span style=display:flex><span>          <span style=color:#f92672>sql-file</span>: <span style=color:#ae81ff>./migrate.sql</span>
 </span></span><span style=display:flex><span>          <span style=color:#75715e># or ./myapp/migrate.sql if you&#39;re in the same job as the build</span>
 </span></span></code></pre></div><p>So this is using the Microsoft-maintained <code>Azure/sql-action</code> step, passing it our connection string and the script we created earlier. I&rsquo;ve not been able to use this technique yet, because the db_owner user in my connection string only exists in my app&rsquo;s database, but the sql-action step requires access to the master database on your server. That will change in v2 of the action, due out soon.</p><p>You&rsquo;ll want to have this step happen before the actual deployment of your app, so you&rsquo;re not deploying the app if something goes wrong with the migration.</p><p>And there you have it! Create your migration and apply it within your GitHub Actions workflow!</p></div><footer></footer></article></section></div><footer class=footer><section class=container>©
-2023
+2024
 Matt Hamilton
 ·
 Powered by <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> & <a href=https://github.com/luizdepra/hugo-coder/ target=_blank rel=noopener>Coder</a>.</section></footer></main><script src=/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script></body></html>

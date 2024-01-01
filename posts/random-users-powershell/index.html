@@ -20,7 +20,7 @@
 </span></span><span style=display:flex><span>    Select-Object -First ([<span style=color:#66d9ef>Math</span>]::Max($minimum, $_.Count * $percentage / <span style=color:#ae81ff>100</span>))
 </span></span><span style=display:flex><span>  }
 </span></span></code></pre></div><p>So we&rsquo;re getting all the active users, grouping them by department, and then sorting the members randomly. We then pull the top few people from each department to yield the results.</p><p>Note that if you have departments with a very small number of users, the percentage might end up meaning you get no people from that department. So we define a <code>$minimum</code> variable to sure we get at least that many people.</p><p>As part of our roll-out, we&rsquo;re adding updated users to a group, so we also check the user&rsquo;s <code>MemberOf</code> attribute and filter out the ones that we&rsquo;ve already updated.</p><p>Of course you could slice this by some other property, like <code>Office</code> or <code>Title</code>, if you want the spread based on something other than department.</p></div><footer></footer></article></section></div><footer class=footer><section class=container>©
-2023
+2024
 Matt Hamilton
 ·
 Powered by <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> & <a href=https://github.com/luizdepra/hugo-coder/ target=_blank rel=noopener>Coder</a>.</section></footer></main><script src=/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script></body></html>
