@@ -40,7 +40,7 @@ url = 'https://github.com/mabster'
 [[params.social]]
 rel = 'me'
 name = 'Mastodon'
-icon = 'fa fa-2x fa-mastodon'
+icon = 'fa fa-2x fa-brands fa-mastodon'
 weight = 3
 url = 'https://mastodon.social/@mabster'
 
