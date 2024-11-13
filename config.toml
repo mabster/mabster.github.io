@@ -45,10 +45,10 @@ weight = 3
 url = 'https://mastodon.social/@mabster'
 
 [[params.social]]
-name = 'Twitter'
-icon = 'fa fa-2x fa-twitter'
+name = 'Bluesky'
+icon = 'fa fa-2x fa-brands fa-bluesky'
 weight = 3
-url = 'https://twitter.com/mabster'
+url = 'https://bsky.app/profile/mabster.net'
 
 [[params.social]]
 name = 'Stack Overflow'
