@@ -3,16 +3,25 @@ nav {
     /* ancient ruin is rgb(174,164,154); */
 }
 
-body a, .footer a {
+body.colorscheme-light a, 
+body.colorscheme-light .footer a,
+body.colorscheme-light a:hover,
+body.colorscheme-light a:focus,
+body.colorscheme-light .navigation a:hover, 
+body.colorscheme-light .navigation a:focus,
+body.colorscheme-light .content .centered .about ul li a:hover, 
+body.colorscheme-light .content .centered .about ul li a:focus {
     color: sienna;
 }
 
-body a:hover {
-    color: sienna!important;
-}
-
-body.colorscheme-dark a, body.colorscheme-dark .footer a {
-    color: rosybrown; 
+body.colorscheme-dark a, 
+body.colorscheme-dark .footer a,
+body.colorscheme-dark a:hover,
+body.colorscheme-dark .navigation a:hover, 
+body.colorscheme-dark .navigation a:focus,
+body.colorscheme-dark .content .centered .about ul li a:hover, 
+body.colorscheme-dark .content .centered .about ul li a:focus {
+    color: rosybrown ; 
 }
 
 div.highlight code {
@@ -20,25 +29,25 @@ div.highlight code {
     color: unset;
 }
 
-.colorscheme-dark a:hover {
-    color: rosybrown !important;
-}
-
 a.heading-link {
     display: none;
 }
 
-.about h2 {
+body.colorscheme-dark h2,
+body.colorscheme-light h2 {
     font-weight: lighter;
-    font-size: 2rem !important;
+    font-size: 2rem ;
+    color: olivedrab;
 }
 
-.about h2 {
-    color: olivedrab !important;
+body.colorscheme-light .content .list ul li .title:hover, 
+body.colorscheme-light .content .list ul li .title:focus {
+    color: unset;
 }
 
-.title:hover {
-    color: unset !important;
+body.colorscheme-dark .content .list ul li .title:hover, 
+body.colorscheme-dark .content .list ul li .title:focus {
+    color: unset;
 }
 
 .list li {
@@ -54,10 +63,10 @@ li .date .month {
 }
 
 @media only screen and (min-width: 769px) {
-    li .date {
-        flex-grow: 0 !important;
-        text-align: center !important; 
-        display: flex !important; 
+    .list ul li .date {
+        flex-grow: 0;
+        text-align: center; 
+        display: flex; 
         flex-direction: column; 
         justify-content: flex-start;
         align-items: stretch;
@@ -81,16 +90,12 @@ li .date .month {
 .title .summary  {
     font-size: 1.5rem; 
     font-weight: normal; 
-    line-height: 2.2rem !important; 
-    color: unset !important;
-}
-
-.title .summary p {
-    margin-top: 0;
+    line-height: 2.2rem; 
+    color: unset;
 }
 
 .content article p {
-    hyphens: unset !important;
+    hyphens: unset;
 }
 
 .content .post .post-meta {

@@ -21,4 +21,4 @@ So what's this blog all about? Well, it's mostly going to be technical content, 
 
 If I'm feeling particularly spicy I might even throw in something more personal or gaming related just to keep y'all on your toes.
 
-I haven't enabled Disqus comments or anything like that, so if you have something you'd like to tell me, be sure to hit me up on [Twitter](https://twitter.com/mabster)!
+I haven't enabled Disqus comments or anything like that, so if you have something you'd like to tell me, be sure to hit me up on [Bluesky](https://bsky.app/profile/mabster.net)!
