@@ -17,10 +17,10 @@
         <span class="day">{{ .Date | time.Format ("02") }}</span>
         <span class="year">{{ .Date | time.Format ("2006") }}</span>
       </div>
-      <div class="title">
+      <div class="title" style="view-transition-name: post-title-{{ .File.BaseFileName }};">
         <a href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
         <div class="summary">
-          {{ .Summary | plainify | htmlUnescape }}
+          {{ .Summary | plainify | htmlUnescape }} 
         </div>
       </div>
     </li>

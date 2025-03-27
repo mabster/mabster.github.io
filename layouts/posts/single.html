@@ -6,7 +6,7 @@
     <article>
       <header>
         <div class="post-title">
-          <h1 class="title">
+          <h1 class="title" style="view-transition-name: post-title-{{ .File.BaseFileName }};">
             <a class="title-link" href="{{ .Permalink | safeURL }}">
               {{ .Title }}
             </a>

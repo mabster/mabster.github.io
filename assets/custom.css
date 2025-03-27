@@ -1,27 +1,19 @@
+@view-transition {
+    navigation: auto;
+}
+
+.title {
+    /* so the animation is smoother - no aspect-ratio change */
+    width: fit-content;
+}
+
+.navigation-link:first-of-type {
+    view-transition-name: posts-nav;
+}
+
 nav {
     border-top: 15px solid olivedrab;
     /* ancient ruin is rgb(174,164,154); */
-}
-
-body.colorscheme-light a, 
-body.colorscheme-light .footer a,
-body.colorscheme-light a:hover,
-body.colorscheme-light a:focus,
-body.colorscheme-light .navigation a:hover, 
-body.colorscheme-light .navigation a:focus,
-body.colorscheme-light .content .centered .about ul li a:hover, 
-body.colorscheme-light .content .centered .about ul li a:focus {
-    color: sienna;
-}
-
-body.colorscheme-dark a, 
-body.colorscheme-dark .footer a,
-body.colorscheme-dark a:hover,
-body.colorscheme-dark .navigation a:hover, 
-body.colorscheme-dark .navigation a:focus,
-body.colorscheme-dark .content .centered .about ul li a:hover, 
-body.colorscheme-dark .content .centered .about ul li a:focus {
-    color: rosybrown ; 
 }
 
 div.highlight code {
@@ -33,11 +25,15 @@ a.heading-link {
     display: none;
 }
 
+body.colorscheme-dark h1,
+body.colorscheme-light h1 {
+    color: unset;
+}
+
 body.colorscheme-dark h2,
 body.colorscheme-light h2 {
     font-weight: lighter;
     font-size: 2rem ;
-    color: olivedrab;
 }
 
 body.colorscheme-light .content .list ul li .title:hover, 
