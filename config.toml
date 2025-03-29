@@ -1,4 +1,4 @@
-baseURL = 'http://mabster.github.io/'
+baseURL = 'http://mabster.net/'
 languageCode = 'en-au'
 title = 'Mabster.NET'
 theme = 'hugo-coder'
