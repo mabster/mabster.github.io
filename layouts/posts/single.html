@@ -40,7 +40,10 @@
         {{ if .Params.featuredImage }}
           <img src="{{ .Params.featuredImage | relURL }}" alt="Featured image"/>
         {{ end }}
-        {{ .Content }}
+        <div style="view-transition-name: post-summary-{{ .File.BaseFileName }};">
+          {{ .Summary }}
+        </div>
+        {{ .ContentWithoutSummary }}
       </div>
 
 

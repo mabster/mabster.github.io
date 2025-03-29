@@ -2,9 +2,23 @@
     navigation: auto;
 }
 
+/* ::view-transition-group(*) {
+    position: fixed;
+    inset: 0;
+  
+    animation-duration: 5s;
+    animation-fill-mode: both;
+} */
+
+h1,
+h2 { 
+    margin: 0; 
+}
+
 .title {
     /* so the animation is smoother - no aspect-ratio change */
     width: fit-content;
+    line-height: normal;
 }
 
 .navigation-link:first-of-type {
@@ -14,11 +28,6 @@
 nav {
     border-top: 15px solid olivedrab;
     /* ancient ruin is rgb(174,164,154); */
-}
-
-div.highlight code {
-    background-color: unset;
-    color: unset;
 }
 
 a.heading-link {
@@ -50,44 +59,63 @@ body.colorscheme-dark .content .list ul li .title:focus {
     margin-bottom: 3rem;
 }
 
-li .date {
+li time {
     opacity: 0.4;
+    display: block;
 } 
 
-li .date .month {
+li time .month {
     text-transform: uppercase;
 }
 
-@media only screen and (min-width: 769px) {
-    .list ul li .date {
-        flex-grow: 0;
-        text-align: center; 
-        display: flex; 
-        flex-direction: column; 
-        justify-content: flex-start;
-        align-items: stretch;
+.summary  {
+    margin-top: 0.5rem;
+    font-size: 1.5rem; 
+    line-height: 1.6;
+    color: unset;
+}
+
+@media only screen and (max-width: 768px) {
+    .list ul li {
+        margin-bottom: 3rem;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .list ul:not(.pagination) li {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 3rem;
     }
 
-    .date .day {
+    .list ul:not(.pagination) li > div {
+        display: block; 
+    }
+
+    .list ul li time {
+        display: flex; 
+        text-align: center; 
+        flex-direction: column; 
+        justify-content: flex-start;
+    }
+
+    .list ul li time .day {
         font-size: 3.8rem;
     }
     
-    .date .month {
+    .list ul li time .month {
         font-size: 1.8rem; 
         letter-spacing: 0.1rem;
     }
     
-    .date .year {
+    .list ul li time .year {
         font-size: 1.2rem; 
         letter-spacing: 0.3rem;
     }
 }
 
-.title .summary  {
-    font-size: 1.5rem; 
-    font-weight: normal; 
-    line-height: 2.2rem; 
-    color: unset;
+.content header h1 {
+    line-height: normal;
 }
 
 .content article p {
@@ -99,6 +127,6 @@ li .date .month {
     font-size: 1.5rem;
 }
 
-.content .post .post-meta .date .reading-time {
+.content .post .post-meta .reading-time {
     margin-right: 1.5rem;
 }
