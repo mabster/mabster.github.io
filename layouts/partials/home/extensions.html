@@ -1,0 +1,8 @@
+<div class="featured list">
+    <ul>
+        {{ range ( where .Site.RegularPages "Type" "posts" | first 2 ) }}
+            {{- .Render "li" -}}
+        {{ end }}
+    </ul>
+    <p style="margin: 0; font-size: 1.5rem; justify-self: right;"><a href="/posts">All posts &rarr;</a></p>
+</div>

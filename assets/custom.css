@@ -2,6 +2,19 @@
     navigation: auto;
 }
 
+#dark-mode-toggle {
+    view-transition-name: dark-mode-toggle;
+}
+
+main > nav {
+    view-transition-name: nav;
+    border-top: 15px solid olivedrab;
+    /* ancient ruin is rgb(174,164,154); */
+}
+
+main > footer {
+    view-transition-name: footer;
+}
 /* ::view-transition-group(*) {
     position: fixed;
     inset: 0;
@@ -11,23 +24,25 @@
 } */
 
 h1,
-h2 { 
+h2,
+h3,
+h4 { 
     margin: 0; 
+}
+
+.container.centered {
+    flex-direction: column;
+}
+
+.centered .list ul {
+    margin-top: 6rem;
+    margin-bottom: 0;
 }
 
 .title {
     /* so the animation is smoother - no aspect-ratio change */
     width: fit-content;
     line-height: normal;
-}
-
-.navigation-link:first-of-type {
-    view-transition-name: posts-nav;
-}
-
-nav {
-    border-top: 15px solid olivedrab;
-    /* ancient ruin is rgb(174,164,154); */
 }
 
 a.heading-link {
@@ -55,8 +70,8 @@ body.colorscheme-dark .content .list ul li .title:focus {
     color: unset;
 }
 
-.list li {
-    margin-bottom: 3rem;
+.list li + li {
+    margin-top: 3rem;
 }
 
 li time {
