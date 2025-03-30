@@ -70,7 +70,7 @@ body.colorscheme-dark .content .list ul li .title:focus {
     color: unset;
 }
 
-.list li + li {
+.list ul:not(.pagination) li + li {
     margin-top: 3rem;
 }
 
