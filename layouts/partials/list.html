@@ -17,8 +17,10 @@
         <span class="day">{{ .Date | time.Format ("02") }}</span>
         <span class="year">{{ .Date | time.Format ("2006") }}</span>
       </time>
-      <div class="title" style="view-transition-name: post-title-{{ .File.BaseFileName }};">
-        <a href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
+      <div>
+        <h2 class="title" style="view-transition-name: post-title-{{ .File.BaseFileName }};">
+          <a href="{{ .Params.externalLink | default .RelPermalink }}">{{ .Title }}</a>
+        </h2>
         <div class="summary" style="view-transition-name: post-summary-{{ .File.BaseFileName }};">
           {{ .Summary | plainify | htmlUnescape }}
         </div>

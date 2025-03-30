@@ -34,7 +34,7 @@ I found that the Coder theme allows for a file called `extensions.html` which yo
 
 (Yeah I cheated a bit there with some inline style on the 'All posts" link!)
 
-The first thing I noticed, having added this, is that although the content on the home page is in a div with a class of 'centered', and its display is set to 'flex', the `flex-direction` property was not set, so the extensions sit /beside/ the about section rather than /below/ it! That was easy to fix with some custom CSS:
+The first thing I noticed, having added this, is that although the content on the home page is in a div with a class of 'centered', and its display is set to 'flex', the `flex-direction` property was not set, so the extensions sit *beside* the about section rather than *below* it! That was easy to fix with some custom CSS:
 
 ```css
 .container.centered {

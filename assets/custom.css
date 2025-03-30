@@ -1,6 +1,36 @@
+/* reset */
+:root {
+    --fs-100: 1.2rem;
+    --fs-200: 1.6rem;
+    --fs-400: 1.8rem;
+    --fs-600: 2rem;
+    --fs-800: 3.2rem;
+    --fs-900: 3.8rem;
+}
+
+body {
+    font-size: var(--fs-400)
+}
+
+h1,
+h2,
+h3,
+h4 { 
+    margin: 0; 
+}
+
+/* view transitions */
 @view-transition {
     navigation: auto;
 }
+
+/* ::view-transition-group(*) {
+    position: fixed;
+    inset: 0;
+  
+    animation-duration: 5s;
+    animation-fill-mode: both;
+} */
 
 #dark-mode-toggle {
     view-transition-name: dark-mode-toggle;
@@ -15,20 +45,11 @@ main > nav {
 main > footer {
     view-transition-name: footer;
 }
-/* ::view-transition-group(*) {
-    position: fixed;
-    inset: 0;
-  
-    animation-duration: 5s;
-    animation-fill-mode: both;
-} */
 
-h1,
-h2,
-h3,
-h4 { 
-    margin: 0; 
+ul.pagination {
+    view-transition-name: pagination;
 }
+
 
 .container.centered {
     flex-direction: column;
@@ -57,7 +78,7 @@ body.colorscheme-light h1 {
 body.colorscheme-dark h2,
 body.colorscheme-light h2 {
     font-weight: lighter;
-    font-size: 2rem ;
+    font-size: var(--fs-600);
 }
 
 body.colorscheme-light .content .list ul li .title:hover, 
@@ -85,7 +106,7 @@ li time .month {
 
 .summary  {
     margin-top: 0.5rem;
-    font-size: 1.5rem; 
+    font-size: var(--fs-200);
     line-height: 1.6;
     color: unset;
 }
@@ -115,22 +136,31 @@ li time .month {
     }
 
     .list ul li time .day {
-        font-size: 3.8rem;
+        font-size: var(--fs-900);
     }
     
     .list ul li time .month {
-        font-size: 1.8rem; 
+        font-size: var(--fs-400); 
         letter-spacing: 0.1rem;
     }
     
     .list ul li time .year {
-        font-size: 1.2rem; 
+        font-size: var(--fs-100);
         letter-spacing: 0.3rem;
     }
 }
 
+.feed-icon {
+    font-size: var(--fs-800);
+}
+
+.content header {
+    margin: 0;
+}
+
 .content header h1 {
     line-height: normal;
+    font-size: var(--fs-800);
 }
 
 .content article p {
@@ -139,7 +169,7 @@ li time .month {
 
 .content .post .post-meta {
     margin-bottom: 0.5rem;
-    font-size: 1.5rem;
+    font-size: var(--fs-200);
 }
 
 .content .post .post-meta .reading-time {
