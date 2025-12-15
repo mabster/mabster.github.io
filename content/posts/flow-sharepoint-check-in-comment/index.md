@@ -13,6 +13,8 @@ series = []
 
 When you're building a Power Automate workflow that to approve files in SharePoint, you need the ETag property from the item, but you probably also want the "check-in comment" that the user enters when they click "Submit for Approval". Here's how to get both in one step!
 
+<!--more-->
+
 I've found a lot of posts around the Internet describing how to retrieve the check-in comment for a document in SharePoint that your workflow is requesting approval for. Typically you'd want to include that comment in the approval request, so that the approver has some context about what changed in this version of the document. None of the posts, though, are as simple as this, and none of them combine it with fetching the document item's ETag, which is also required when approving or rejecting the document.
 
 The idea is to use the SharePoint REST API to fetch the underlying `File` object associated with the item. That'll give you both properties in one request!
@@ -40,4 +42,5 @@ body('Get_ETag_and_Comment')?['CheckInComment']
 body('Get_ETag_and_Comment')?['ETag']
 
 ```
+
 
