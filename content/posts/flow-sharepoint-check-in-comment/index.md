@@ -19,8 +19,7 @@ I've found a lot of posts around the Internet describing how to retrieve the che
 
 The idea is to use the SharePoint REST API to fetch the underlying `File` object associated with the item. That'll give you both properties in one request!
 
-{{ $image := .Resources.GetMatch "Get_ETag_and_Comment.png" }}
-<img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="A screenshot of the Send HTTP Request to SharePoint step in Power Automate">
+![A screenshot of the Send HTTP Request to SharePoint step in Power Automate](Get_ETag_and_Comment.png)
 
 In the image above you can see I'm using our flow triggers to specify the site, library and item Id, but the crux is that you'll need this URL:
 
@@ -42,5 +41,6 @@ body('Get_ETag_and_Comment')?['CheckInComment']
 body('Get_ETag_and_Comment')?['ETag']
 
 ```
+
 
 
