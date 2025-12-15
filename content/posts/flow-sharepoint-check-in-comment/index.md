@@ -1,6 +1,6 @@
 +++ 
 draft = false
-date = 2025-12-16T16:00:00+11:00
+date = 2025-12-15T16:00:00+11:00
 title = "Get SharePoint Document Check-In Comment and ETag in Power Automate"
 description = ""
 slug = ""
@@ -40,3 +40,4 @@ body('Get_ETag_and_Comment')?['CheckInComment']
 body('Get_ETag_and_Comment')?['ETag']
 
 ```
+
