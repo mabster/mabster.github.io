@@ -29,7 +29,7 @@ _api/web/lists('<your library GUID>')/items(<your item Id>)/File
 
 You'll also want to make sure you're supplying the `accept` header with a value of `application/json` so you get a nice minimal JSON payload back from SharePoint.
 
-To use the returned check-in comment in a subsequent action, you can use an expression like this (noting that my step's name is "Get_ETag_and_Comment" but yours might be different:
+To use the returned check-in comment in a subsequent action, you can use an expression like this (noting that my step's name is "Get_ETag_and_Comment" but yours might be different):
 
 ```
 body('Get_ETag_and_Comment')?['CheckInComment']
@@ -41,6 +41,7 @@ body('Get_ETag_and_Comment')?['CheckInComment']
 body('Get_ETag_and_Comment')?['ETag']
 
 ```
+
 
 
 
