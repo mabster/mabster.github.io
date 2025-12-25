@@ -17,6 +17,7 @@ h2,
 h3,
 h4 { 
     margin: 0; 
+    text-wrap: balance;  
 }
 
 /* view transitions */
