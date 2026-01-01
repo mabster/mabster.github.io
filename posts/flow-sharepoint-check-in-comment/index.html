@@ -11,7 +11,7 @@
 </code></pre><p>You&rsquo;ll also want to make sure you&rsquo;re supplying the <code>accept</code> header with a value of <code>application/json</code> so you get a nice minimal JSON payload back from SharePoint.</p><p>To use the returned check-in comment in a subsequent action, you can use an expression like this (noting that my step&rsquo;s name is &ldquo;Get_ETag_and_Comment&rdquo; but yours might be different):</p><pre tabindex=0><code>body(&#39;Get_ETag_and_Comment&#39;)?[&#39;CheckInComment&#39;]
 </code></pre><p>… and likewise to get the ETag you&rsquo;d use this expression:</p><pre tabindex=0><code>body(&#39;Get_ETag_and_Comment&#39;)?[&#39;ETag&#39;]
 </code></pre></div><footer></footer></article></section></div><footer class=footer><section class=container>©
-2025
+2026
 Matt Hamilton
 ·
 Powered by <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> & <a href=https://github.com/luizdepra/hugo-coder/ target=_blank rel=noopener>Coder</a>.</section></footer></main><script src=/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script></body></html>
