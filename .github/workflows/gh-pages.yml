@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main  # Set a branch to deploy
-  schedule:
-      - cron: '15 1 * * *' # 01:15 UTC daily
+  # schedule:
+      # - cron: '15 1 * * *' # 01:15 UTC daily
   pull_request:
   workflow_dispatch:
 
